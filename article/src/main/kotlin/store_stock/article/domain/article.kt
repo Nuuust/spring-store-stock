@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.PastOrPresent
 import jakarta.validation.constraints.PositiveOrZero
 import jakarta.validation.constraints.Size
-
+//test
 @Entity
 @Table(name = "Article")
 data class article(
