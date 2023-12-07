@@ -1,10 +1,10 @@
-package storeStock.fr
+package store_stock.article
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class FrApplicationTests {
+class ArticleApplicationTests {
 
 	@Test
 	fun contextLoads() {

@@ -1,11 +1,11 @@
-package storeStock.fr
+package store_stock.article
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class FrApplication
+class ArticleApplication
 
 fun main(args: Array<String>) {
-	runApplication<FrApplication>(*args)
+	runApplication<ArticleApplication>(*args)
 }
