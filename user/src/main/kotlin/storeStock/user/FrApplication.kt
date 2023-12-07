@@ -1,4 +1,4 @@
-package storeStock.fr
+package storeStock.user
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
