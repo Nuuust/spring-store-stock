@@ -1,7 +1,5 @@
 package storeStock.user.controller
 
-package storeStock.fr.controller
-
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content
@@ -16,6 +14,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
+import storeStock.user.controller.dto.UserDTO
+import storeStock.user.controller.dto.asUserDTO
+import storeStock.user.errors.UserNotFoundError
+import storeStock.user.repository.UserRepository
 
 
 @RestController
