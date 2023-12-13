@@ -7,6 +7,7 @@ import store_stock.article.repository.ArticleRepository
 import store_stock.user.controller.dto.asArticleDTO
 import java.util.UUID
 import store_stock.article.repository.entity.ArticleEntity
+import kotlin.jvm.optionals.getOrNull
 
 @Repository
 class ArticleDataRepository(private val jpa:ArticleJpaRepository):ArticleRepository {
@@ -30,12 +31,18 @@ class ArticleDataRepository(private val jpa:ArticleJpaRepository):ArticleReposit
             .map { it.asArticle() }.get()
     }
 
-    override fun update(article: Article): Result<Article> {
-        TODO("Not yet implemented")
+    override fun update(article: Article): Result<Article> = if(jpa.findById(article.id).isPresent) {
+        val saved=jpa.save(article.asEntity())
+        Result.success(saved.asArticle())
+    }else{
+        Result.failure(Exception("Artile not in DB"))
     }
 
-    override fun delete(id: UUID): Article? {
-        TODO("Not yet implemented")
+    override fun delete(id:UUID): Article? {
+        return jpa.findById(id)
+                .also { jpa.deleteById(id) }
+                .map { it.asArticle() }
+                .getOrNull()
     }
 }
 interface ArticleJpaRepository : JpaRepository<ArticleEntity, UUID> {

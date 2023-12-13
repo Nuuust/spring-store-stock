@@ -72,4 +72,39 @@ class ArticleController(val articleRepository: ArticleRepository){
             .let {
                 ResponseEntity.ok(it)
             }
+
+    @Operation(summary = "Update a article by ID")
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", description = "Article updated",
+                content = [Content(mediaType = "application/json",
+                        schema = Schema(implementation = ArticleDTO::class))]),
+        ApiResponse(responseCode = "400", description = "Invalid request",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])])
+    @PutMapping("/api/articles/{id}")
+    fun update(@PathVariable id: UUID, @RequestBody @Valid article: ArticleDTO): ResponseEntity<Any> =
+            if (id != article.id) {
+                ResponseEntity.badRequest().body("Invalid email")
+            } else {
+                articleRepository.update(article.asArticle()).fold(
+                        { success -> ResponseEntity.ok(success.asArticleDTO()) },
+                        { failure -> ResponseEntity.badRequest().body(failure.message) }
+                )
+            }
+
+
+    @Operation(summary = "Delete article by id")
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "204", description = "article deleted"),
+        ApiResponse(responseCode = "400", description = "article not found",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])
+    ])
+    @DeleteMapping("/api/articles/{id}")
+    fun delete(@PathVariable id:UUID, @RequestBody @Valid article: ArticleDTO): ResponseEntity<Any> {
+        val deleted = articleRepository.delete(id)
+        return if (deleted == null) {
+            ResponseEntity.badRequest().body("article not found")
+        } else {
+            ResponseEntity.noContent().build()
+        }
+    }
 }
