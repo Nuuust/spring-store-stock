@@ -2,21 +2,17 @@ package store_stock.article.domain
 import jakarta.persistence.*
 import java.util.Date
 import java.util.UUID
-import jakarta.validation.Valid
-import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.PastOrPresent
 import jakarta.validation.constraints.PositiveOrZero
 import jakarta.validation.constraints.Size
 //test
 @Entity
 @Table(name = "Article")
-data class article(
+data class Article(
     @Id
     val id:UUID=UUID.randomUUID(),
-    @field:Size(min=3, max = 15)
-    val firstname:String,
-    @field:Size(min=3, max = 15)
-    val lastname:String,
+    @field:Size(min=3, max = 30)
+    val name:String,
     @field:PositiveOrZero
     val price:Float,
     @field:PositiveOrZero
