@@ -7,6 +7,7 @@ import store_stock.article.domain.Article
 
 data class ArticleDTO(
     @Id
+    @GeneratedValue
     val id: UUID = UUID.randomUUID(),
     @field:Size(min=3, max = 30)
     val name:String,

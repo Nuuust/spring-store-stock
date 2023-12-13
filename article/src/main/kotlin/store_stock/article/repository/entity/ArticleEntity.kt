@@ -11,7 +11,7 @@ import java.util.UUID
 @Entity
 @Table(name = "articles")
 class ArticleEntity(
-    @Id val id: UUID=UUID.randomUUID(),
+    @Id @GeneratedValue val id: UUID=UUID.randomUUID(),
     val name: String,
     val price:Float,
     val stock:Int,

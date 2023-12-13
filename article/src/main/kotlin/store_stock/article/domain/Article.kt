@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size
 @Table(name = "Article")
 data class Article(
     @Id
+    @GeneratedValue
     val id:UUID=UUID.randomUUID(),
     @field:Size(min=3, max = 30)
     val name:String,
