@@ -4,9 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import store_stock.article.domain.Article
 import store_stock.article.repository.ArticleRepository
-import store_stock.user.controller.dto.asArticleDTO
 import java.util.UUID
-import store_stock.article.repository.entity.ArticleEntity
 import kotlin.jvm.optionals.getOrNull
 
 @Repository

@@ -1,4 +1,4 @@
-package storeStock.Panier
+package storestock.Panier
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

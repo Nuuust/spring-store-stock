@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53673def-d006-43f0-906b-36ca80714b2d" name="Changes" comment="">
+    <list default="true" id="53673def-d006-43f0-906b-36ca80714b2d" name="Changes" comment="article">
+      <change beforePath="$PROJECT_DIR$/../Panier/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../Panier/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Panier/src/main/kotlin/storeStock/Panier/PanierApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Panier/src/main/kotlin/storestock/Panier/PanierApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Panier/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Panier/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Panier/src/test/kotlin/storeStock/Panier/PanierApplicationTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Panier/src/test/kotlin/storestock/Panier/PanierApplicationTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/controller/ArticleController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/controller/ArticleController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/controller/dto/ArticleDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/controller/dto/ArticleDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/repository/entity/ArticleDataRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/repository/entity/ArticleDataRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/repository/entity/ArticleEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/store_stock/article/repository/entity/ArticleEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +29,18 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -39,7 +64,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/var/home/E216091G/spring-store-stock/article"
+    "last_opened_file_path": "C:/Users/alexa/spring-store-stock/article"
   }
 }]]></component>
   <component name="RecentsManager">

@@ -8,18 +8,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.Null
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
-import store_stock.article.domain.Article
 import store_stock.article.errors.ArticleNotFoundError
 import store_stock.article.repository.ArticleRepository
-import store_stock.user.controller.dto.ArticleDTO
-import store_stock.user.controller.dto.asArticleDTO
+import store_stock.article.controller.dto.ArticleDTO
+import store_stock.article.controller.dto.asArticleDTO
 import java.util.UUID
 
 @RestController

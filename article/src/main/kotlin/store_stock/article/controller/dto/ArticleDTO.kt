@@ -1,5 +1,6 @@
-package store_stock.user.controller.dto
+package store_stock.article.controller.dto
 
+import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.validation.constraints.*
 import java.util.*
