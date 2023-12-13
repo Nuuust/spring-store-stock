@@ -14,12 +14,8 @@ class UserDatabaseRepository(private val jpa: UserJpaRepository) : UserRepositor
         Result.success(saved.asUser())
     }
 
-    override fun list(age: Int?): List<User> {
-        return if (age == null) {
-            jpa.findAll().map { it.asUser() }
-        } else {
-            jpa.findAllByAge(age).map { it.asUser() }
-        }
+    override fun list(): List<User> {
+        return jpa.findAll().map { it.asUser() }
     }
 
     override fun get(email: String): User? {
@@ -45,5 +41,4 @@ class UserDatabaseRepository(private val jpa: UserJpaRepository) : UserRepositor
 }
 
 interface UserJpaRepository : JpaRepository<UserEntity, String> {
-    fun findAllByAge(age: Int): List<UserEntity>
 }

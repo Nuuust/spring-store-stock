@@ -46,8 +46,8 @@ class UserController(val userRepository: UserRepository) {
                                 schema = Schema(implementation = UserDTO::class))
                 )])])
     @GetMapping("/api/users")
-    fun list(@RequestParam(required = false) @Min(15) age: Int?) =
-            userRepository.list(age)
+    fun list() =
+            userRepository.list()
                     .map { it.asUserDTO() }
                     .let {
                         ResponseEntity.ok(it)
