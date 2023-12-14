@@ -13,56 +13,53 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
-import storestock.user.controller.dto.UserDTO
+import storestock.user.controller.dto.CartDTO
 import storestock.user.controller.dto.asUserDTO
-import storestock.user.errors.UserNotFoundError
-import storestock.user.repository.UserRepository
+import storestock.user.repository.CartRepository
 
 
 @RestController
 @Validated
-class UserController(val userRepository: UserRepository) {
+class CartController(val cartRepository: CartRepository) {
 
-    @Operation(summary = "Create user")
+    @Operation(summary = "Add item to cart")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "201", description = "User created",
+        ApiResponse(responseCode = "201", description = "Item added created",
                 content = [Content(mediaType = "application/json",
-                        schema = Schema(implementation = UserDTO::class)
-                )]),
-        ApiResponse(responseCode = "409", description = "User already exist",
-                content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])])
-    @PostMapping("/api/users")
-    fun create(@RequestBody @Valid user: UserDTO): ResponseEntity<UserDTO> =
-            userRepository.create(user.asUser()).fold(
+                        schema = Schema(implementation = CartDTO::class)
+                )]),])
+    @PostMapping("/api/cart")
+    fun addToCart(@RequestBody @Valid cart: CartDTO): ResponseEntity<CartDTO> =
+            cartRepository.addToCart(cart.asCart()).fold(
                     { success -> ResponseEntity.status(HttpStatus.CREATED).body(success.asUserDTO()) },
                     { failure -> ResponseEntity.status(HttpStatus.CONFLICT).build() })
 
-    @Operation(summary = "List users")
+    @Operation(summary = "List Carts")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "List users",
+        ApiResponse(responseCode = "200", description = "List All items of all Carts",
                 content = [Content(mediaType = "application/json",
                         array = ArraySchema(
-                                schema = Schema(implementation = UserDTO::class))
+                                schema = Schema(implementation = CartDTO::class))
                 )])])
-    @GetMapping("/api/users")
-    fun list() =
-            userRepository.list()
+    @GetMapping("/api/carts")
+    fun listCarts() =
+            cartRepository.listCarts()
                     .map { it.asUserDTO() }
                     .let {
                         ResponseEntity.ok(it)
                     }
 
-    @Operation(summary = "Get user by email")
+    /*@Operation(summary = "Get user by email")
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "The user",
                 content = [
                     Content(mediaType = "application/json",
-                            schema = Schema(implementation = UserDTO::class))]),
+                            schema = Schema(implementation = CartDTO::class))]),
         ApiResponse(responseCode = "404", description = "User not found")
     ])
     @GetMapping("/api/users/{email}")
-    fun findOne(@PathVariable @Email email: String): ResponseEntity<UserDTO> {
-        val user = userRepository.get(email)
+    fun findOne(@PathVariable @Email email: String): ResponseEntity<CartDTO> {
+        val user = cartRepository.get(email)
         return if (user != null) {
             ResponseEntity.ok(user.asUserDTO())
         } else {
@@ -74,15 +71,15 @@ class UserController(val userRepository: UserRepository) {
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "User updated",
                 content = [Content(mediaType = "application/json",
-                        schema = Schema(implementation = UserDTO::class))]),
+                        schema = Schema(implementation = CartDTO::class))]),
         ApiResponse(responseCode = "400", description = "Invalid request",
                 content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])])
     @PutMapping("/api/users/{email}")
-    fun update(@PathVariable @Email email: String, @RequestBody @Valid user: UserDTO): ResponseEntity<Any> =
-            if (email != user.email) {
+    fun update(@PathVariable @Email email: String, @RequestBody @Valid cart: CartDTO): ResponseEntity<Any> =
+            if (email != cart.email) {
                 ResponseEntity.badRequest().body("Invalid email")
             } else {
-                userRepository.update(user.asUser()).fold(
+                cartRepository.update(cart.asCart()).fold(
                         { success -> ResponseEntity.ok(success.asUserDTO()) },
                         { failure -> ResponseEntity.badRequest().body(failure.message) }
                 )
@@ -96,11 +93,11 @@ class UserController(val userRepository: UserRepository) {
     ])
     @DeleteMapping("/api/users/{email}")
     fun delete(@PathVariable @Email email: String): ResponseEntity<Any> {
-        val deleted = userRepository.delete(email)
+        val deleted = cartRepository.delete(email)
         return if (deleted == null) {
             ResponseEntity.badRequest().body("User not found")
         } else {
             ResponseEntity.noContent().build()
         }
-    }
+    }*/
 }
