@@ -18,6 +18,5 @@ data class Article(
     val price:Float,
     @field:PositiveOrZero
     val stock:Int,
-    @field:PastOrPresent
     val lastUpdate: Date
 )

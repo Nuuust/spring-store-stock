@@ -1,4 +1,4 @@
-package storestock.user.controller
+package storestock.panier.controller
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -8,14 +8,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Email
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
-import storestock.user.controller.dto.CartDTO
-import storestock.user.controller.dto.asUserDTO
-import storestock.user.repository.CartRepository
+import storestock.panier.controller.dto.CartDTO
+import storestock.panier.controller.dto.asCartDTO
+import storestock.panier.repository.CartRepository
+import java.util.UUID
 
 
 @RestController
@@ -24,15 +24,17 @@ class CartController(val cartRepository: CartRepository) {
 
     @Operation(summary = "Add item to cart")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "201", description = "Item added created",
+        ApiResponse(responseCode = "201", description = "ItemCart created",
                 content = [Content(mediaType = "application/json",
                         schema = Schema(implementation = CartDTO::class)
-                )]),])
+                )]),ApiResponse(responseCode = "409", description = "ItemCart Conflict",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = UUID::class))])])
     @PostMapping("/api/cart")
-    fun addToCart(@RequestBody @Valid cart: CartDTO): ResponseEntity<CartDTO> =
+    fun addToCart(@RequestBody @Valid cart: CartDTO): ResponseEntity<Any> =
             cartRepository.addToCart(cart.asCart()).fold(
-                    { success -> ResponseEntity.status(HttpStatus.CREATED).body(success.asUserDTO()) },
-                    { failure -> ResponseEntity.status(HttpStatus.CONFLICT).build() })
+                    { success -> ResponseEntity.ok(success.asCartDTO()) },
+                    { failure -> ResponseEntity.badRequest().body(failure.message) }
+            )
 
     @Operation(summary = "List Carts")
     @ApiResponses(value = [
@@ -44,60 +46,55 @@ class CartController(val cartRepository: CartRepository) {
     @GetMapping("/api/carts")
     fun listCarts() =
             cartRepository.listCarts()
-                    .map { it.asUserDTO() }
+                    .map { it.asCartDTO() }
                     .let {
                         ResponseEntity.ok(it)
                     }
-
-    /*@Operation(summary = "Get user by email")
+    @Operation(summary = "Delete ItemCart by email & itemId")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "The user",
-                content = [
-                    Content(mediaType = "application/json",
-                            schema = Schema(implementation = CartDTO::class))]),
-        ApiResponse(responseCode = "404", description = "User not found")
+        ApiResponse(responseCode = "204", description = "ItemCart deleted"),
+        ApiResponse(responseCode = "400", description = "ItemCart not found",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])
     ])
-    @GetMapping("/api/users/{email}")
-    fun findOne(@PathVariable @Email email: String): ResponseEntity<CartDTO> {
-        val user = cartRepository.get(email)
-        return if (user != null) {
-            ResponseEntity.ok(user.asUserDTO())
+    @DeleteMapping("/api/cart/{email}/{itemId}")
+    fun delete(@PathVariable @Email email: String, @PathVariable itemId: UUID): ResponseEntity<Any> {
+        val deleted = cartRepository.deleteItemCart(email,itemId)
+        return if (deleted == null) {
+            ResponseEntity.badRequest().body("CartItem not found")
         } else {
-            throw UserNotFoundError(email)
+            ResponseEntity.noContent().build()
         }
     }
-
-    @Operation(summary = "Update a user by email")
+    @Operation(summary = "Update a CartItem by email & itemId")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "User updated",
+        ApiResponse(responseCode = "200", description = "CartItem updated",
                 content = [Content(mediaType = "application/json",
                         schema = Schema(implementation = CartDTO::class))]),
         ApiResponse(responseCode = "400", description = "Invalid request",
                 content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])])
-    @PutMapping("/api/users/{email}")
-    fun update(@PathVariable @Email email: String, @RequestBody @Valid cart: CartDTO): ResponseEntity<Any> =
-            if (email != cart.email) {
-                ResponseEntity.badRequest().body("Invalid email")
-            } else {
-                cartRepository.update(cart.asCart()).fold(
-                        { success -> ResponseEntity.ok(success.asUserDTO()) },
-                        { failure -> ResponseEntity.badRequest().body(failure.message) }
-                )
-            }
+    @PutMapping("/api/cart/update")
+    fun update(@RequestBody @Valid cart: CartDTO): ResponseEntity<Any> =
+            cartRepository.updateCart(cart.asCart()).fold(
+                    { success -> ResponseEntity.ok(success.asCartDTO()) },
+                    { failure -> ResponseEntity.badRequest().body(failure.message) }
+            )
 
-    @Operation(summary = "Delete user by email")
+    @Operation(summary = "Validate the cart / Update quantity / Clear for the user")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "204", description = "User deleted"),
-        ApiResponse(responseCode = "400", description = "User not found",
+        ApiResponse(responseCode = "204", description = "Cart Validated"),
+        ApiResponse(responseCode = "400", description = "Error",
                 content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))])
     ])
-    @DeleteMapping("/api/users/{email}")
-    fun delete(@PathVariable @Email email: String): ResponseEntity<Any> {
-        val deleted = cartRepository.delete(email)
-        return if (deleted == null) {
-            ResponseEntity.badRequest().body("User not found")
-        } else {
-            ResponseEntity.noContent().build()
-        }
-    }*/
+    @GetMapping("/api/cart/{email}")
+    fun validate(@PathVariable @Email email: String): ResponseEntity<Any> {
+        return cartRepository.validateCart(email).fold(
+                onSuccess = { carts ->
+                    ResponseEntity.ok(carts.map { it.asCartDTO() })
+                },
+                onFailure = { error ->
+                    ResponseEntity.badRequest().body(error.message)
+                }
+        )
+    }
+
 }

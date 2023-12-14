@@ -21,7 +21,7 @@ class HttpErrorHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun constraintViolationException(e: ConstraintViolationException) =
-            ResponseEntity.badRequest().body("Noooo")
+            ResponseEntity.badRequest().body("constraintViolationException")
 
     @ExceptionHandler(UserNotFoundError::class)
     fun userNotFound(e: UserNotFoundError) = ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)

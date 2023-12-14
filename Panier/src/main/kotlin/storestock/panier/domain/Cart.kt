@@ -1,5 +1,5 @@
-package storestock.Panier.domain
+package storestock.panier.domain
 
 import java.util.*
 
-data class Cart(val email: String, val ItemId: UUID, val qte: Int)
+data class Cart(val email: String, val itemId: UUID, val qte: Int)

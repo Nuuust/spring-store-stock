@@ -1,11 +1,12 @@
-package storestock.user.repository
+package storestock.panier.repository
 
-import storestock.Panier.domain.Cart
+import storestock.panier.domain.Cart
+import java.util.UUID
 
 interface CartRepository {
     fun addToCart(cart: Cart): Result<Cart>
     fun listCarts(): List<Cart>
     fun updateCart(cart: Cart): Result<Cart>
-    fun deleteItemCart(email: String): Cart?
-    fun ValidateCart(email: String): Cart?
+    fun deleteItemCart(email: String,itemId: UUID): Cart?
+    fun validateCart(email: String): Result<List<Cart>>
 }

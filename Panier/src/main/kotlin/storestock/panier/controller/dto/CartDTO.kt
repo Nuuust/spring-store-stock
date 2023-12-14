@@ -1,19 +1,18 @@
-package storestock.user.controller.dto
+package storestock.panier.controller.dto
 
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
 import jakarta.validation.constraints.Email
-import storestock.Panier.domain.Cart
+import jakarta.validation.constraints.Min
+import storestock.panier.domain.Cart
 import java.util.*
 
 data class CartDTO(
         @field:Email val email: String,
-        val ItemId: UUID,
-        val qte: Int
+        val itemId: UUID,
+        @field:Min(1) val qte: Int
 
 ) {
 
-    fun asCart() = Cart( email, ItemId, qte)
+    fun asCart() = Cart( email, itemId, qte)
 }
 
-fun Cart.asUserDTO() = CartDTO( this.email, this.ItemId, this.qte)
+fun Cart.asCartDTO() = CartDTO( this.email, this.itemId, this.qte)

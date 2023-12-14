@@ -16,7 +16,6 @@ data class ArticleDTO(
     val price:Float,
     @field:PositiveOrZero
     val stock:Int,
-    @field:PastOrPresent
     val lastUpdate: Date
 ) {
     fun asArticle()=Article(id,name,price,stock,lastUpdate)

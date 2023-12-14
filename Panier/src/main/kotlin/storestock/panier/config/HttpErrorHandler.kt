@@ -1,4 +1,4 @@
-package storestock.user.config
+package storestock.panier.config
 
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpHeaders
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import storestock.user.errors.UserNotFoundError
+import storestock.panier.errors.CartNotFoundError
 
 @ControllerAdvice
 class HttpErrorHandler : ResponseEntityExceptionHandler() {
@@ -21,8 +21,8 @@ class HttpErrorHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun constraintViolationException(e: ConstraintViolationException) =
-            ResponseEntity.badRequest().body("Noooo")
+            ResponseEntity.badRequest().body("NOOOO")
 
-    @ExceptionHandler(UserNotFoundError::class)
-    fun userNotFound(e: UserNotFoundError) = ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
+    @ExceptionHandler(CartNotFoundError::class)
+    fun cartNotFound(e: CartNotFoundError) = ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
 }
